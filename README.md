@@ -4,13 +4,15 @@
 
 # Cullect — 문화생활 추천 시스템 (Hybrid Recommendation Engine)
 
-2025 동국대학교 공개SW프로젝트 팀 프로젝트 **"문화생활추천 앱"** 에서 제가 담당한 AI 추천 시스템 부분입니다.
-제가 작업한 추천 엔진 코드를 중심으로 구조를 정리했습니다.
+2025 동국대학교 공개SW프로젝트 팀 프로젝트 **"문화생활추천 앱"** 에서 **팀장**을 맡아 프로젝트를 총괄하고, AI 추천 시스템 부분을 직접 설계·개발했습니다.
+이 저장소는 제가 작업한 추천 엔진 코드를 중심으로 구조를 정리한 것입니다.
 
 > Team project (Dongguk University, Open Source SW Project, 2025): a culture/event recommendation app.
-> This repository contains the recommendation engine I built and served via FastAPI.
+> I led the team and built the recommendation engine served via FastAPI.
 
 ## 담당 역할 (My Role)
+
+**팀장 · AI 추천 시스템 개발**
 
 사용자 프로필·행동 로그를 기반으로 문화 콘텐츠(전시, 공연 등)를 추천하는 **하이브리드 추천 시스템**을 설계하고 구현했습니다.
 
@@ -23,6 +25,12 @@
 
 <p align="center">
   <img src="docs/images/recommendation_screens.png" alt="추천 기능 화면" width="700">
+</p>
+
+### 추천 기능 시연
+
+<p align="center">
+  <img src="docs/images/recommend_demo.gif" alt="추천 기능 시연 GIF" width="280">
 </p>
 
 ## 아키텍처 (Architecture)
