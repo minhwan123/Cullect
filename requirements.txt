@@ -1,0 +1,11 @@
+fastapi
+pydantic
+uvicorn
+apscheduler
+python-dotenv
+pymysql
+pandas
+numpy
+scikit-learn
+gensim
+xgboost
