@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/images/banner.png" alt="Cullect — 문화를 고르다, 문화를 모으다" width="480">
+</p>
+
 # Cullect — 문화생활 추천 시스템 (Hybrid Recommendation Engine)
 
 2025 동국대학교 공개SW프로젝트 팀 프로젝트 **"문화생활추천 앱"** 에서 제가 담당한 AI 추천 시스템 부분입니다.
@@ -15,26 +19,36 @@
 - 두 모델의 추천 결과를 결합하는 **하이브리드 추천 API**를 FastAPI로 서빙
 - APScheduler로 매일 새벽 1시 자동 재학습 파이프라인 구성
 
+## 스크린샷 (Screenshots)
+
+<p align="center">
+  <img src="docs/images/recommendation_screens.png" alt="추천 기능 화면" width="700">
+</p>
+
 ## 아키텍처 (Architecture)
 
-```
-MySQL (culture_db)
-      │  pandas.read_sql
-      ▼
-┌─────────────────────────────┬─────────────────────────────┐
-│ train_collaborative_filtering.py │  train_xgboost_model.py       │
-│  사용자 프로필 코사인 유사도       │  XGBoost + Word2Vec + 거리 피처 │
-└─────────────────────────────┴─────────────────────────────┘
-      │                               │
-      ▼                               ▼
-data/collaborative_recommendations.csv   data/xgboost_recommendations.csv
-      │                               │
-      └───────────────┬───────────────┘
-                       ▼
-             recommend_model.py (hybrid 결합)
-                       ▼
-                  main.py (FastAPI)
-                POST /recommend
+### 전체 시스템 구조
+
+앱은 Flutter 클라이언트, Spring Boot 서버, 그리고 제가 담당한 Python/FastAPI 추천 엔진, MySQL·Redis·S3로 구성됩니다.
+
+<p align="center">
+  <img src="docs/images/system_architecture.png" alt="전체 시스템 아키텍처" width="700">
+</p>
+
+### 이 저장소의 추천 파이프라인
+
+```mermaid
+flowchart LR
+    DB[(MySQL<br/>culture_db)] --> CF[train_collaborative_filtering.py<br/>프로필 코사인 유사도]
+    DB --> XG[train_xgboost_model.py<br/>XGBoost + Word2Vec + 거리 피처]
+
+    CF --> CSV1[data/collaborative_recommendations.csv]
+    XG --> CSV2[data/xgboost_recommendations.csv]
+
+    CSV1 --> HYBRID[recommend_model.py<br/>하이브리드 결합]
+    CSV2 --> HYBRID
+
+    HYBRID --> API[main.py · FastAPI<br/>POST /recommend]
 ```
 
 ## 기술 스택 (Tech Stack)
@@ -57,6 +71,9 @@ data/
   xgboost_recommendations.csv       # XGBoost 모델 결과 예시
 sql/
   *.sql                              # 팀에서 설계한 DB 스키마 (MySQL dump)
+docs/
+  발표자료.pdf                       # 팀 최종 발표자료
+  images/                            # README에 사용된 이미지
 ```
 
 ## 실행 방법 (Getting Started)
@@ -83,10 +100,11 @@ uvicorn main:app --reload
 - Windows 환경에서는 `main.py`의 `subprocess.run(["python", ...])` 호출이, Linux/Mac에서는 `python3`로 바꿔야 할 수 있습니다.
 - 학습 스크립트(`train_*.py`)는 MySQL에 연결해 데이터를 로드하므로, DB가 준비되어 있어야 정상 동작합니다. `sql/` 폴더의 스키마로 로컬 DB를 구성할 수 있습니다.
 
-## 보안 관련 정리 내역
+## 발표자료
 
-원본에는 MySQL 비밀번호가 소스 코드에 평문으로 하드코딩되어 있었습니다. 이 저장소에서는 `.env` 기반 환경변수로 전환했고, 시드 데이터에 포함되어 있던 실제 이메일 계정 정보는 더미 값으로 치환했습니다.
+[docs/발표자료.pdf](docs/발표자료.pdf)
 
-## 원본 팀 프로젝트
+## 팀 프로젝트
 
-이 프로젝트는 [문화생활추천 앱 팀 프로젝트](https://github.com/rnjsgurwns4/culture-ai)에서 제가 담당했던 추천 시스템 부분을 정리한 것입니다.
+이 저장소는 **문화생활추천 앱** 팀 프로젝트에서 제가 담당했던 추천 시스템 부분을 정리한 것입니다.
+팀 프로젝트 전체(앱)는 [Cullect-App-Front](https://github.com/woo-rug/Cullect-App-Front) 에서 확인하실 수 있습니다.
