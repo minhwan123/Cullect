@@ -2,13 +2,14 @@
   <img src="docs/images/banner.png" alt="Cullect — 문화를 고르다, 문화를 모으다" width="480">
 </p>
 
+<br>
+
 # Cullect — 문화생활 추천 시스템 (Hybrid Recommendation Engine)
 
-2025 동국대학교 공개SW프로젝트 팀 프로젝트 **"문화생활추천 앱"** 에서 **팀장**을 맡아 프로젝트를 총괄하고, AI 추천 시스템 부분을 직접 설계·개발했습니다.
-이 저장소는 제가 작업한 추천 엔진 코드를 중심으로 구조를 정리한 것입니다.
+2025 동국대학교 공개SW프로젝트 팀 프로젝트 **"문화생활추천 앱"** 에서 팀장을 맡아 프로젝트를 총괄하고, AI 추천 시스템 부분을 설계·개발했습니다.
+이 repository는 제가 작업한 추천 엔진 코드를 중심으로 구조를 정리한 것입니다.
 
-> Team project (Dongguk University, Open Source SW Project, 2025): a culture/event recommendation app.
-> I led the team and built the recommendation engine served via FastAPI.
+<br>
 
 ## 담당 역할 (My Role)
 
@@ -21,17 +22,23 @@
 - 두 모델의 추천 결과를 결합하는 **하이브리드 추천 API**를 FastAPI로 서빙
 - APScheduler로 매일 새벽 1시 자동 재학습 파이프라인 구성
 
+<br>
+
 ## 스크린샷 (Screenshots)
 
 <p align="center">
   <img src="docs/images/recommendation_screens.png" alt="추천 기능 화면" width="700">
 </p>
 
+<br>
+
 ### 추천 기능 시연
 
 <p align="center">
   <img src="docs/images/recommend_demo.gif" alt="추천 기능 시연 GIF" width="280">
 </p>
+
+<br>
 
 ## 아키텍처 (Architecture)
 
@@ -43,7 +50,9 @@
   <img src="docs/images/system_architecture.png" alt="전체 시스템 아키텍처" width="700">
 </p>
 
-### 이 저장소의 추천 파이프라인
+<br>
+
+### 추천 파이프라인
 
 ```mermaid
 flowchart LR
@@ -59,17 +68,21 @@ flowchart LR
     HYBRID --> API[main.py · FastAPI<br/>POST /recommend]
 ```
 
+<br>
+
 ## 기술 스택 (Tech Stack)
 
 - **API**: FastAPI, Uvicorn, APScheduler
 - **ML/Data**: scikit-learn, XGBoost, gensim (Word2Vec), pandas, numpy
 - **DB**: MySQL (PyMySQL)
 
+<br>
+
 ## 프로젝트 구조 (Project Structure)
 
 ```
 src/
-  main.py                          # FastAPI 앱 — /recommend, /run-model 엔드포인트, 스케줄러
+  main.py                           # FastAPI 앱 — /recommend, /run-model 엔드포인트, 스케줄러
   recommend_model.py                # 두 모델의 추천 결과를 결합하는 하이브리드 로직
   train_collaborative_filtering.py  # 사용자 프로필 기반 협업 필터링 학습/추천 생성
   train_xgboost_model.py            # XGBoost 하이브리드 랭킹 모델 학습/추천 생성
@@ -78,11 +91,13 @@ data/
   collaborative_recommendations.csv # 협업 필터링 결과 예시
   xgboost_recommendations.csv       # XGBoost 모델 결과 예시
 sql/
-  *.sql                              # 팀에서 설계한 DB 스키마 (MySQL dump)
+  *.sql                             # DB 스키마 (MySQL dump)
 docs/
   발표자료.pdf                       # 팀 최종 발표자료
-  images/                            # README에 사용된 이미지
+  images/                           # README에 사용된 이미지
 ```
+
+<br>
 
 ## 실행 방법 (Getting Started)
 
@@ -103,14 +118,20 @@ uvicorn main:app --reload
 { "user_id": 1 }
 ```
 
+<br>
+
 ### 참고사항
 
 - Windows 환경에서는 `main.py`의 `subprocess.run(["python", ...])` 호출이, Linux/Mac에서는 `python3`로 바꿔야 할 수 있습니다.
 - 학습 스크립트(`train_*.py`)는 MySQL에 연결해 데이터를 로드하므로, DB가 준비되어 있어야 정상 동작합니다. `sql/` 폴더의 스키마로 로컬 DB를 구성할 수 있습니다.
 
+<br>
+
 ## 발표자료
 
 [docs/발표자료.pdf](docs/발표자료.pdf)
+
+<br>
 
 ## 팀 프로젝트
 
